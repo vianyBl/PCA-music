@@ -1,19 +1,34 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Home
-    </ion-title>
+    <ion-title>Home</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <!-- SLIDER DE GÉNEROS -->
   <swiper-container pagination="true" loop="true" slides-per-view="1">
-    <swiper-slide *ngFor="let genre of genres">
-      <div class="slide-content"> 
-        <h2>{{genre.title}}</h2>
+    <swiper-slide
+      *ngFor="let genre of genres"
+      (click)="selectGenre(genre)"
+    >
+      <div class="slide-content">
+        <h2>{{ genre.title }}</h2>
         <img [src]="genre.img" [alt]="genre.title">
-        <p>{{genre.description}}</p>
       </div>
     </swiper-slide>
   </swiper-container>
+
+  <!-- BOTÓN CAMBIO DE TEMA -->
+  <ion-button expand="block" (click)="CambiarTema()">
+    Cambiar tema 🎨
+  </ion-button>
+
+  <!-- CARD DESCRIPCIÓN -->
+  <ion-card class="bg-card-test" *ngIf="selectedGenre">
+    <ion-card-content>
+      <p>{{ selectedGenre.description }}</p>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>

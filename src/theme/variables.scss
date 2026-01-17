@@ -1,2 +1,29 @@
-// For information on how to create your own theme, please refer to:
-// https://ionicframework.com/docs/theming/
+:root {
+  --color-fondo: #ffffff;
+  --color-primario: #f4cb89;
+  --color-secundario: #fc7e00;
+
+  --espaciado-base1: 1rem;
+  --espaciado-grande: 2rem;
+}
+
+/* Tema oscuro */
+.tema-oscuro {
+  --color-fondo: #1e1e1e;
+  --color-primario: #333333;
+  --color-secundario: #ff9800;
+}
+
+/* Tema rosa */
+.tema-rosa {
+  --color-fondo: #2a002a;
+  --color-primario: #f44ff4;
+  --color-secundario: #ff8fff;
+}
+
+/* Tema azul */
+.tema-azul {
+  --color-fondo: #001f3f;
+  --color-primario: #007bff;
+  --color-secundario: #66b2ff;
+}
