@@ -1,4 +1,5 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+// 1. Importamos OnInit para el ciclo de vida de inicio
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   IonHeader,
@@ -12,6 +13,15 @@ import {
   IonCardContent
 } from '@ionic/angular/standalone';
 
+// 2. IMPORTANTE: Importar el servicio de Storage.
+import { StorageService } from '../storage.service';
+
+// 3. Importamos Router para la navegación
+import { Router } from '@angular/router';
+
+// Definimos la clave para guardar en la base de datos local
+const THEME_KEY = 'selected-theme';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -19,23 +29,13 @@ import {
   standalone: true,
   imports: [
     CommonModule,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    IonButton,
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardContent
+    IonHeader, IonToolbar, IonTitle, IonContent,
+    IonButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
-  // =========================
-  // GÉNEROS MUSICALES
-  // =========================
   genres = [
     {
       title: 'música clásica',
@@ -68,10 +68,45 @@ export class HomePage {
   selectedGenre = this.genres[0];
 
   // =========================
-  // SISTEMA DE TEMAS
+  // SISTEMA DE TEMAS CORREGIDO
   // =========================
-  temas = ['tema-oscuro', 'tema-rosa', 'tema-azul'];
-  temaActualIndex = 0;
+  temas = ['light', 'tema-oscuro', 'tema-rosa', 'tema-azul'];
+  temaActualIndex = 0; // Empieza en 0 (light)
+
+  // Propiedad para saber si la intro ya fue vista
+  introYaVista = false;
+
+  // 5. Inyectamos el servicio en el constructor
+  constructor(private storageService: StorageService, private router: Router) {}
+
+  // 6. ngOnInit: Se ejecuta al cargar la página
+  async ngOnInit() {
+    // =========================
+    // Recuperar tema guardado
+    // =========================
+    const savedTheme = await this.storageService.get(THEME_KEY);
+
+    if (savedTheme) {
+      console.log('Tema recuperado del storage:', savedTheme);
+      const index = this.temas.indexOf(savedTheme);
+      if (index !== -1) {
+        this.temaActualIndex = index;
+        this.aplicarTema(savedTheme, false);
+      }
+    }
+
+    // =========================
+    // Verificar si ya se vio la intro
+    // =========================
+    const visto = await this.storageService.get('introVisto');
+    this.introYaVista = visto === true;
+
+    if (this.introYaVista) {
+      console.log("El usuario ya visitó la intro anteriormente");
+      // Aquí puedes decidir si ocultar el botón VER INTRO
+      // o redirigir automáticamente al home sin mostrar intro
+    }
+  }
 
   // =========================
   // MÉTODOS
@@ -81,13 +116,29 @@ export class HomePage {
   }
 
   CambiarTema() {
-    document.body.classList.remove(...this.temas);
-
-    this.temaActualIndex =
-      (this.temaActualIndex + 1) % this.temas.length;
-
-    document.body.classList.add(this.temas[this.temaActualIndex]);
+    this.temaActualIndex = (this.temaActualIndex + 1) % this.temas.length;
+    const nuevoTema = this.temas[this.temaActualIndex];
+    this.aplicarTema(nuevoTema, true);
   }
 
-  constructor() {}
+  private aplicarTema(nombreTema: string, guardar: boolean) {
+    document.body.classList.remove(...this.temas.slice(1));
+
+    if (nombreTema !== 'light') {
+      document.body.classList.add(nombreTema);
+    }
+
+    if (guardar) {
+      console.log('Guardando tema:', nombreTema);
+      this.storageService.set(THEME_KEY, nombreTema);
+    }
+  }
+
+  // =========================
+  // FUNCIÓN PARA EL BOTÓN "VER INTRO"
+  // =========================
+  irAIntro() {
+    this.router.navigate(['/intro']);
+  }
+
 }

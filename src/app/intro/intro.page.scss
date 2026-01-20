@@ -1,0 +1,31 @@
+.slide-content {
+  text-align: center;
+  padding: 10px;
+}
+
+.slide-content img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 10px;
+  margin: 10% 0;
+}
+
+.slide-content h2,
+.slide-content p {
+  color: white !important;
+}
+
+.card {
+  padding: var(--espaciado-grande);
+  background-color: var(--color-primario);
+}
+
+ion-card.bg-card-test {
+  background: var(--color-secundario);
+  color: white;
+}
+
+ion-content {
+  --background: var(--color-fondo);
+}
