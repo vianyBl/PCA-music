@@ -1,17 +1,7 @@
 // 1. Importamos OnInit para el ciclo de vida de inicio
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonButton,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardContent
-} from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
 
 // 2. IMPORTANTE: Importar el servicio de Storage.
 import { StorageService } from '../storage.service';
@@ -29,8 +19,7 @@ const THEME_KEY = 'selected-theme';
   standalone: true,
   imports: [
     CommonModule,
-    IonHeader, IonToolbar, IonTitle, IonContent,
-    IonButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent
+    IonicModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
@@ -138,6 +127,9 @@ export class HomePage implements OnInit {
   // FUNCIÓN PARA EL BOTÓN "VER INTRO"
   // =========================
   irAIntro() {
+    // Desenfocar el elemento activo para evitar que quede foco en el DOM oculto
+    try { (document.activeElement as HTMLElement)?.blur(); } catch (e) { /* noop */ }
+
     this.router.navigate(['/intro']);
   }
 

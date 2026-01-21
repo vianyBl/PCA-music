@@ -1,30 +1,72 @@
 :root {
-  --color-fondo: #ffffff;
+  /* Light Theme */
+  --color-fondo: #f8f9fa;
   --color-primario: #f4cb89;
   --color-secundario: #fc7e00;
+  --color-texto: #2d3436;
+  --color-texto-secundario: #636e72;
+  --color-borde: #e0e0e0;
+  --color-sombra: rgba(0, 0, 0, 0.1);
 
+  /* Spacing */
+  --espaciado-xs: 0.5rem;
+  --espaciado-base: 1rem;
   --espaciado-base1: 1rem;
+  --espaciado-md: 1.5rem;
+  --espaciado-lg: 2rem;
   --espaciado-grande: 2rem;
+  --espaciado-xl: 3rem;
+
+  /* Border Radius */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+
+  /* Font Sizes */
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 2.5rem;
+
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 300ms ease-in-out;
+  --transition-slow: 500ms ease-in-out;
 }
 
-/* Tema oscuro */
+/* Dark Theme */
 .tema-oscuro {
-  --color-fondo: #1e1e1e;
-  --color-primario: #333333;
+  --color-fondo: #121212;
+  --color-primario: #2d2d2d;
   --color-secundario: #ff9800;
+  --color-texto: #f8f9fa;
+  --color-texto-secundario: #b0b0b0;
+  --color-borde: #333333;
+  --color-sombra: rgba(0, 0, 0, 0.3);
 }
 
-/* Tema rosa */
+/* Pink Theme */
 .tema-rosa {
-  --color-fondo: #2a002a;
+  --color-fondo: #fce4ec;
   --color-primario: #f44ff4;
   --color-secundario: #ff8fff;
+  --color-texto: #880088;
+  --color-texto-secundario: #c2185b;
+  --color-borde: #f8bbd0;
+  --color-sombra: rgba(244, 79, 244, 0.2);
 }
 
-/* Tema azul */
+/* Blue Theme */
 .tema-azul {
-  --color-fondo: #001f3f;
+  --color-fondo: #e3f2fd;
   --color-primario: #007bff;
   --color-secundario: #66b2ff;
+  --color-texto: #0d47a1;
+  --color-texto-secundario: #1565c0;
+  --color-borde: #bbdefb;
+  --color-sombra: rgba(0, 123, 255, 0.2);
 }
 

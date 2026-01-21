@@ -1,40 +1,56 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Home</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true">
+  <div class="home-wrapper">
+    <div class="home-container">
+      
+      <!-- Header Section -->
+      <header class="home-header">
+        <h1 class="home-title">Descubre Música</h1>
+        <p class="home-subtitle">Explora géneros y encuentra tu sonido perfecto</p>
+      </header>
 
-<ion-content>
+      <!-- Genres Carousel -->
+      <section class="genres-section" *ngIf="genres && genres.length > 0">
+        <swiper-container 
+          pagination="true" 
+          [loop]="genres.length > 2" 
+          slides-per-view="1"
+          space-between="16">
+          <swiper-slide
+            *ngFor="let genre of genres"
+            (click)="selectGenre(genre)">
+            <div class="genre-card">
+              <div class="genre-image-wrapper">
+                <img [src]="genre.img" [alt]="genre.title" class="genre-image">
+                <div class="genre-overlay">
+                  <h2 class="genre-title">{{ genre.title }}</h2>
+                </div>
+              </div>
+            </div>
+          </swiper-slide>
+        </swiper-container>
+      </section>
 
-  <!-- SLIDER DE GÉNEROS -->
-  <swiper-container pagination="true" loop="true" slides-per-view="1">
-    <swiper-slide
-      *ngFor="let genre of genres"
-      (click)="selectGenre(genre)"
-    >
-      <div class="slide-content">
-        <h2>{{ genre.title }}</h2>
-        <img [src]="genre.img" [alt]="genre.title">
-      </div>
-    </swiper-slide>
-  </swiper-container>
+      <!-- Selected Genre Description -->
+      <section class="description-section" *ngIf="selectedGenre">
+        <div class="description-card">
+          <h3 class="description-title">{{ selectedGenre.title }}</h3>
+          <p class="description-text">{{ selectedGenre.description }}</p>
+        </div>
+      </section>
 
-  <!-- BOTÓN CAMBIO DE TEMA -->
-  <ion-button expand="block" (click)="CambiarTema()">
-    Cambiar tema 🎨
-  </ion-button>
+      <!-- Action Buttons -->
+      <section class="actions-section">
+        <button class="action-btn action-btn-primary" (click)="irAIntro()" *ngIf="selectedGenre">
+          <ion-icon name="play" class="action-icon"></ion-icon>
+          <span class="action-text">Comenzar</span>
+        </button>
+        
+        <button class="action-btn action-btn-secondary" (click)="CambiarTema()">
+          <ion-icon name="color-palette" class="action-icon"></ion-icon>
+          <span class="action-text">Cambiar Tema</span>
+        </button>
+      </section>
 
-  <!-- CARD DESCRIPCIÓN -->
-  <ion-card class="bg-card-test" *ngIf="selectedGenre">
-    <ion-card-content>
-      <p>{{ selectedGenre.description }}</p>
-    </ion-card-content>
-  </ion-card>
-  <div class="button-container">
-    <ion-button expand="block" color="tertiary" (click)="irAIntro()" class="btn-intro">
-      VER INTRO
-    </ion-button>
+    </div>
   </div>
-
-
 </ion-content>

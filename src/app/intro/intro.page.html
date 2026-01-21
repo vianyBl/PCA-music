@@ -1,11 +1,80 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>intro</ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-content>
-      <ion-title size="large">soy intro</ion-title>
-      <ion-button (click)="goBack()"> volver al home </ion-button>
+<ion-content [fullscreen]="true">
+  <div class="intro-wrapper">
+    <button class="back-button" (click)="goBack()" aria-label="Volver">
+      <ion-icon name="arrow-back" class="back-icon"></ion-icon>
+    </button>
 
+    <div class="intro-container">
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <div class="hero-icon-wrapper">
+          <ion-icon name="headset" class="hero-icon"></ion-icon>
+        </div>
+        <h1 class="hero-title">Descubre tu música</h1>
+        <p class="hero-subtitle">Explora géneros y personaliza tu experiencia musical</p>
+      </section>
 
+      <!-- Theme Selector -->
+      <section class="theme-section">
+        <h2 class="section-title">Elige tu tema</h2>
+        <div class="theme-grid">
+          <button 
+            *ngFor="let tema of temas" 
+            class="theme-option" 
+            [class.active]="tema === selectedTheme" 
+            (click)="aplicarTema(tema, true)"
+            [attr.aria-label]="tema === 'tema-oscuro' ? 'Tema Oscuro' : tema === 'tema-rosa' ? 'Tema Rosa' : tema === 'tema-azul' ? 'Tema Azul' : 'Tema Claro'"
+            [attr.aria-pressed]="tema === selectedTheme">
+            <div class="theme-preview" [attr.data-theme]="tema"></div>
+            <span class="theme-name">{{ tema === 'tema-oscuro' ? 'Oscuro' : tema === 'tema-rosa' ? 'Rosa' : tema === 'tema-azul' ? 'Azul' : 'Claro' }}</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section class="features-section">
+        <div class="feature-item">
+          <div class="feature-icon-wrapper">
+            <ion-icon name="musical-notes" class="feature-icon"></ion-icon>
+          </div>
+          <div class="feature-text">
+            <h3 class="feature-title">Géneros Variados</h3>
+            <p class="feature-desc">Encuentra el sonido que te define</p>
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-icon-wrapper">
+            <ion-icon name="color-palette" class="feature-icon"></ion-icon>
+          </div>
+          <div class="feature-text">
+            <h3 class="feature-title">Temas Personalizables</h3>
+            <p class="feature-desc">Adapta la app a tu estilo</p>
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-icon-wrapper">
+            <ion-icon name="phone-portrait" class="feature-icon"></ion-icon>
+          </div>
+          <div class="feature-text">
+            <h3 class="feature-title">Diseño Responsive</h3>
+            <p class="feature-desc">Perfecta en cualquier dispositivo</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Button -->
+      <div class="cta-section">
+        <ion-button 
+          expand="block" 
+          size="large"
+          (click)="goBack()" 
+          class="cta-button"
+          aria-label="Comenzar">
+          Comenzar
+        </ion-button>
+      </div>
+    </div>
+  </div>
 </ion-content>

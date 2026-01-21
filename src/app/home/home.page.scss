@@ -1,31 +1,285 @@
-.slide-content {
-  text-align: center;
-  padding: 10px;
+/* ====================================
+   HOME PAGE - MOBILE FIRST
+   ==================================== */
+
+/* Content */
+ion-content {
+  --background: var(--color-fondo);
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
 }
 
-.slide-content img {
+/* Wrapper */
+.home-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main Container */
+.home-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 4vw, 2.5rem);
+  padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1rem, 3vw, 1.5rem);
+  max-width: 1200px;
+  margin: 0 auto;
   width: 100%;
-  max-width: 300px;
-  height: auto;
-  border-radius: 10px;
-  margin: 10% 0;
 }
 
-.slide-content h2,
-.slide-content p {
-  color: white !important;
+/* ====================================
+   HEADER SECTION
+   ==================================== */
+.home-header {
+  text-align: center;
+  padding: clamp(1rem, 3vw, 2rem) 0;
 }
 
-.card {
-  padding: var(--espaciado-grande);
-  background-color: var(--color-primario);
+.home-title {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 800;
+  margin: 0 0 clamp(0.5rem, 2vw, 0.75rem) 0;
+  color: var(--color-texto);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
-ion-card.bg-card-test {
-  background: var(--color-secundario);
+.home-subtitle {
+  font-size: clamp(0.95rem, 2.5vw, 1.125rem);
+  color: var(--color-texto-secundario);
+  margin: 0;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* ====================================
+   GENRES SECTION
+   ==================================== */
+.genres-section {
+  width: 100%;
+}
+
+swiper-container {
+  width: 100%;
+  height: clamp(320px, 50vw, 450px);
+  border-radius: clamp(12px, 2vw, 20px);
+  overflow: visible;
+}
+
+swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.genre-card {
+  width: 100%;
+  height: 100%;
+  border-radius: clamp(12px, 2vw, 20px);
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transition: transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 320ms ease;
+  cursor: pointer;
+}
+
+.genre-card:active {
+  transform: scale(0.97);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.genre-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.genre-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.genre-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+  padding: clamp(1.25rem, 4vw, 2rem);
+  display: flex;
+  align-items: flex-end;
+}
+
+.genre-title {
+  color: white;
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
+  font-weight: 700;
+  margin: 0;
+  text-transform: capitalize;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* ====================================
+   DESCRIPTION SECTION
+   ==================================== */
+.description-section {
+  width: 100%;
+}
+
+.description-card {
+  background: var(--color-primario);
+  background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-secundario) 100%);
+  border-radius: clamp(16px, 3vw, 24px);
+  padding: clamp(1.5rem, 4vw, 2rem);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.description-title {
+  font-size: clamp(1.25rem, 3.5vw, 1.5rem);
+  font-weight: 700;
+  color: white;
+  margin: 0 0 clamp(0.75rem, 2vw, 1rem) 0;
+  text-transform: capitalize;
+  letter-spacing: -0.01em;
+}
+
+.description-text {
+  font-size: clamp(0.95rem, 2.5vw, 1.0625rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0;
+  font-weight: 400;
+}
+
+/* ====================================
+   ACTIONS SECTION
+   ==================================== */
+.actions-section {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 2vw, 1rem);
+  width: 100%;
+  margin-top: auto;
+  padding-top: clamp(1rem, 3vw, 1.5rem);
+}
+
+.action-btn {
+  width: 100%;
+  padding: clamp(1rem, 3vw, 1.25rem) clamp(1.5rem, 4vw, 2rem);
+  border: none;
+  border-radius: clamp(14px, 2.5vw, 18px);
+  font-size: clamp(1rem, 2.5vw, 1.125rem);
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.5rem, 2vw, 0.75rem);
+  transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 220ms ease;
+  letter-spacing: 0.01em;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.action-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.action-btn-primary {
+  background: linear-gradient(135deg, var(--color-secundario) 0%, var(--color-primario) 100%);
   color: white;
 }
 
-ion-content {
-  --background: var(--color-fondo);
+.action-btn-secondary {
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  border: 2px solid var(--color-borde);
+}
+
+ion-icon.action-icon, .action-icon {
+  width: clamp(24px, 4vw, 28px);
+  height: clamp(24px, 4vw, 28px);
+  font-size: clamp(24px, 4vw, 28px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-text {
+  font-weight: 600;
+}
+
+/* ====================================
+   RESPONSIVE DESIGN
+   ==================================== */
+@media (min-width: 640px) {
+  .home-container {
+    gap: 3rem;
+    padding: 3rem 2rem;
+  }
+
+  .home-header {
+    padding: 1.5rem 0;
+  }
+
+  .actions-section {
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .action-btn {
+    flex: 1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-container {
+    gap: 3.5rem;
+    padding: 4rem 3rem;
+  }
+
+  swiper-container {
+    height: 500px;
+  }
+
+  .genre-title {
+    font-size: 2rem;
+  }
+
+  .description-card {
+    padding: 2.5rem;
+  }
+}
+
+/* ====================================
+   THEME VARIATIONS
+   ==================================== */
+.tema-oscuro {
+  .description-card {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .action-btn-secondary {
+    background: #1e1e1e;
+    border-color: #333;
+  }
+
+  .genre-card {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.tema-rosa,
+.tema-azul {
+  .description-card {
+    box-shadow: 0 6px 20px var(--color-sombra);
+  }
 }
