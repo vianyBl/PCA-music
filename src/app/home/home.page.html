@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true">
   <div class="home-wrapper">
     <div class="home-container">
-      
+
       <!-- Header Section -->
       <header class="home-header">
         <h1 class="home-title">Descubre Música</h1>
@@ -17,37 +17,42 @@
           space-between="16">
           <swiper-slide
             *ngFor="let genre of genres"
-            (click)="selectGenre(genre)">
-            <div class="genre-card">
+            (click)="selectGenre(genre)"
+            [class.selected]="selectedGenre === genre"
+            aria-label="Seleccionar género {{ genre.title }}">
+            <ion-card class="genre-card" [class.selected]="selectedGenre === genre" role="button" tabindex="0" (keyup.enter)="selectGenre(genre)">
               <div class="genre-image-wrapper">
-                <img [src]="genre.img" [alt]="genre.title" class="genre-image">
+                <img [src]="genre.img" [alt]="genre.title" class="genre-image" loading="lazy" />
                 <div class="genre-overlay">
                   <h2 class="genre-title">{{ genre.title }}</h2>
                 </div>
               </div>
-            </div>
+            </ion-card>
           </swiper-slide>
         </swiper-container>
       </section>
 
       <!-- Selected Genre Description -->
       <section class="description-section" *ngIf="selectedGenre">
-        <div class="description-card">
+        <ion-card class="description-card fade-in" role="region" aria-label="Descripción género seleccionado">
           <h3 class="description-title">{{ selectedGenre.title }}</h3>
           <p class="description-text">{{ selectedGenre.description }}</p>
-        </div>
+        </ion-card>
       </section>
 
       <!-- Action Buttons -->
-      <section class="actions-section">
-        <button class="action-btn action-btn-primary" (click)="irAIntro()" *ngIf="selectedGenre">
-          <ion-icon name="play" class="action-icon"></ion-icon>
-          <span class="action-text">Comenzar</span>
-        </button>
-        
-        <button class="action-btn action-btn-secondary" (click)="CambiarTema()">
-          <ion-icon name="color-palette" class="action-icon"></ion-icon>
+      <section class="actions-section" role="group" aria-label="Acciones principales">
+        <button class="action-btn action-btn-primary" (click)="CambiarTema()" aria-label="Cambiar tema" role="button">
+          <span class="icon-box">
+            <ion-icon name="color-palette" aria-label="Icono cambiar tema"></ion-icon>
+          </span>
           <span class="action-text">Cambiar Tema</span>
+        </button>
+        <button class="action-btn action-btn-secondary" (click)="irAIntro()" aria-label="Ver intro" role="button">
+          <span class="icon-box">
+            <ion-icon name="refresh" aria-label="Icono ver intro"></ion-icon>
+          </span>
+          <span class="action-text">Ver Intro</span>
         </button>
       </section>
 

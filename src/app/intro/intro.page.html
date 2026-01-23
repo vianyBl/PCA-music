@@ -1,69 +1,30 @@
 <ion-content [fullscreen]="true">
   <div class="intro-wrapper">
-    <button class="back-button" (click)="goBack()" aria-label="Volver">
-      <ion-icon name="arrow-back" class="back-icon"></ion-icon>
-    </button>
 
     <div class="intro-container">
-      <!-- Hero Section -->
-      <section class="hero-section">
-        <div class="hero-icon-wrapper">
-          <ion-icon name="headset" class="hero-icon"></ion-icon>
-        </div>
-        <h1 class="hero-title">Descubre tu música</h1>
-        <p class="hero-subtitle">Explora géneros y personaliza tu experiencia musical</p>
+
+      <!-- Slides Section -->
+      <section class="slides-section" [ngClass]="selectedTheme" [class.tema-oscuro]="selectedTheme === 'tema-oscuro'">
+        <swiper-container pagination="true" loop="true" slides-per-view="1" space-between="12" autoplay="{ delay: 3500 }">
+          <swiper-slide *ngFor="let slide of slides">
+            <div class="slide-content ion-padding ion-text-center" [class.feature-slide]="slide.icon === 'musical-notes'">
+              <img [src]="slide.img" [alt]="slide.title" class="genre-image" loading="lazy" />
+              <h2 class="slide-title">{{ slide.title }}</h2>
+              <p class="slide-desc">{{ slide.desc }}</p>
+            </div>
+          </swiper-slide>
+        </swiper-container>
       </section>
 
-      <!-- Theme Selector -->
-      <section class="theme-section">
-        <h2 class="section-title">Elige tu tema</h2>
-        <div class="theme-grid">
-          <button 
-            *ngFor="let tema of temas" 
-            class="theme-option" 
-            [class.active]="tema === selectedTheme" 
-            (click)="aplicarTema(tema, true)"
-            [attr.aria-label]="tema === 'tema-oscuro' ? 'Tema Oscuro' : tema === 'tema-rosa' ? 'Tema Rosa' : tema === 'tema-azul' ? 'Tema Azul' : 'Tema Claro'"
-            [attr.aria-pressed]="tema === selectedTheme">
-            <div class="theme-preview" [attr.data-theme]="tema"></div>
-            <span class="theme-name">{{ tema === 'tema-oscuro' ? 'Oscuro' : tema === 'tema-rosa' ? 'Rosa' : tema === 'tema-azul' ? 'Azul' : 'Claro' }}</span>
-          </button>
+      <!-- Theme Selector (Single Button) -->
+      <section class="theme-section single-theme">
+        <div class="single-theme-row">
+          <ion-button class="theme-toggle" (click)="nextTheme()" aria-label="Cambiar tema" fill="solid" size="small">
+            Cambiar tema
+          </ion-button>
+          <span class="theme-current-name">{{ selectedTheme === 'tema-oscuro' ? 'Oscuro' : selectedTheme === 'tema-rosa' ? 'Rosa' : selectedTheme === 'tema-azul' ? 'Azul' : 'Claro' }}</span>
         </div>
       </section>
-
-      <!-- Features Section -->
-      <section class="features-section">
-        <div class="feature-item">
-          <div class="feature-icon-wrapper">
-            <ion-icon name="musical-notes" class="feature-icon"></ion-icon>
-          </div>
-          <div class="feature-text">
-            <h3 class="feature-title">Géneros Variados</h3>
-            <p class="feature-desc">Encuentra el sonido que te define</p>
-          </div>
-        </div>
-
-        <div class="feature-item">
-          <div class="feature-icon-wrapper">
-            <ion-icon name="color-palette" class="feature-icon"></ion-icon>
-          </div>
-          <div class="feature-text">
-            <h3 class="feature-title">Temas Personalizables</h3>
-            <p class="feature-desc">Adapta la app a tu estilo</p>
-          </div>
-        </div>
-
-        <div class="feature-item">
-          <div class="feature-icon-wrapper">
-            <ion-icon name="phone-portrait" class="feature-icon"></ion-icon>
-          </div>
-          <div class="feature-text">
-            <h3 class="feature-title">Diseño Responsive</h3>
-            <p class="feature-desc">Perfecta en cualquier dispositivo</p>
-          </div>
-        </div>
-      </section>
-
       <!-- CTA Button -->
       <div class="cta-section">
         <ion-button 

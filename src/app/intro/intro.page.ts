@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
+
+
 
 // Importamos tu servicio de Storage
 import { StorageService } from '../storage.service';
@@ -14,12 +16,37 @@ const THEME_KEY = 'selected-theme';
   templateUrl: './intro.page.html',
   styleUrls: ['./intro.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class IntroPage implements OnInit {
 
   temas = ['light', 'tema-oscuro', 'tema-rosa', 'tema-azul'];
   selectedTheme: string = 'light';
+
+  // Slides dinámicos para la intro
+  slides = [
+    { icon: 'headset', title: 'Descubre tu música', desc: 'Explora géneros y personaliza tu experiencia musical' },
+    { img: 'assets/musica.jpg', title: 'Géneros Variados', desc: 'Encuentra el sonido que te define' },
+    { img: 'color-palette', title: 'Temas Personalizables', desc: 'Adapta la app a tu estilo' },
+    { img: 'phone-portrait', title: 'Diseño Responsive', desc: 'Perfecta en cualquier dispositivo' }
+  ];
+
+  slideOpts = {
+    initialSlide: 0,
+    speed: 400,
+    autoplay: { delay: 3500 },
+    pagination: { clickable: true }
+  };
+
+
+  // Cambia al siguiente tema de la lista (rotativo)
+  nextTheme() {
+    const currentIndex = this.temas.indexOf(this.selectedTheme);
+    const nextIndex = (currentIndex + 1) % this.temas.length;
+    const next = this.temas[nextIndex];
+    this.aplicarTema(next, true);
+  }
 
   constructor(
     private router: Router,

@@ -126,9 +126,16 @@ export class HomePage implements OnInit {
   // =========================
   // FUNCIÓN PARA EL BOTÓN "VER INTRO"
   // =========================
-  irAIntro() {
+  async irAIntro() {
     // Desenfocar el elemento activo para evitar que quede foco en el DOM oculto
     try { (document.activeElement as HTMLElement)?.blur(); } catch (e) { /* noop */ }
+
+    // Borramos la clave para permitir ver la intro de nuevo
+    try {
+      await this.storageService.remove('introVisto');
+    } catch (e) {
+      console.warn('No se pudo borrar introVisto del storage', e);
+    }
 
     this.router.navigate(['/intro']);
   }
