@@ -7,7 +7,7 @@
       <section class="slides-section" [ngClass]="selectedTheme" [class.tema-oscuro]="selectedTheme === 'tema-oscuro'">
         <swiper-container pagination="true" loop="true" slides-per-view="1" space-between="12" autoplay="{ delay: 3500 }">
           <swiper-slide *ngFor="let slide of slides">
-            <div class="slide-content ion-padding ion-text-center" [class.feature-slide]="slide.icon === 'musical-notes'">
+            <div class="slide-content ion-padding ion-text-center" [class.feature-slide]="slide.img === 'musical-notes'">
               <img [src]="slide.img" [alt]="slide.title" class="genre-image" loading="lazy" />
               <h2 class="slide-title">{{ slide.title }}</h2>
               <p class="slide-desc">{{ slide.desc }}</p>

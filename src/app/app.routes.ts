@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { IntroGuard } from './guards/intro.guard';
 
 export const routes: Routes = [
-  // Ruta raíz: redirige a 'home'. El guard de 'home' decidirá si enviar a 'intro'.
+
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 
   {

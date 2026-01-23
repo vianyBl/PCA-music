@@ -6,11 +6,13 @@ import { StorageService } from '../storage.service';
 export class IntroGuard implements CanActivate {
   constructor(private storage: StorageService, private router: Router) {}
 
-  async canActivate(): Promise<boolean | UrlTree> {
+  async canActivate(): Promise<boolean> {
     const visto = await this.storage.get('introVisto');
     if (visto === true) {
       return true;
+    } else {
+      this.router.navigate(['/intro']);
+      return false;
     }
-    return this.router.createUrlTree(['/intro']);
   }
 }

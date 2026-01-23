@@ -26,10 +26,9 @@ export class IntroPage implements OnInit {
 
   // Slides dinámicos para la intro
   slides = [
-    { icon: 'headset', title: 'Descubre tu música', desc: 'Explora géneros y personaliza tu experiencia musical' },
-    { img: 'assets/musica.jpg', title: 'Géneros Variados', desc: 'Encuentra el sonido que te define' },
-    { img: 'color-palette', title: 'Temas Personalizables', desc: 'Adapta la app a tu estilo' },
-    { img: 'phone-portrait', title: 'Diseño Responsive', desc: 'Perfecta en cualquier dispositivo' }
+    { img: 'assets/descubir.jpg', title: 'Descubre tu música', desc: 'Explora géneros y personaliza tu experiencia musical' },
+    { img: 'assets/bienvenida.jpg', title: 'Géneros Variados', desc: 'Encuentra el sonido que te define' },
+    { img: 'assets/variados.jpg', title: 'Temas Personalizables', desc: 'Adapta la app a tu estilo' },
   ];
 
   slideOpts = {
@@ -50,7 +49,7 @@ export class IntroPage implements OnInit {
 
   constructor(
     private router: Router,
-    private storage: StorageService   // 👈 Inyectamos StorageService
+    private storage: StorageService   
   ) { }
 
   async ngOnInit() {

@@ -1,4 +1,4 @@
-// 1. Importamos OnInit para el ciclo de vida de inicio
+
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
@@ -127,7 +127,7 @@ export class HomePage implements OnInit {
   // FUNCIÓN PARA EL BOTÓN "VER INTRO"
   // =========================
   async irAIntro() {
-    // Desenfocar el elemento activo para evitar que quede foco en el DOM oculto
+
     try { (document.activeElement as HTMLElement)?.blur(); } catch (e) { /* noop */ }
 
     // Borramos la clave para permitir ver la intro de nuevo
