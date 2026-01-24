@@ -14,6 +14,11 @@ export const routes: Routes = [
     loadComponent: () => import('./home/home.page').then(m => m.HomePage),
     canActivate: [IntroGuard]
   },
+  {
+    path: 'login',
+    loadComponent: () => import('./login/login.page').then(m => m.LoginPage)
+  },
   // Fallback
   { path: '**', redirectTo: 'intro' }
+
 ];

@@ -70,10 +70,8 @@ export class HomePage implements OnInit {
 
   // 6. ngOnInit: Se ejecuta al cargar la página
   async ngOnInit() {
-    // =========================
-    // Recuperar tema guardado
-    // =========================
     const savedTheme = await this.storageService.get(THEME_KEY);
+    await this.simularCargaDatos();
 
     if (savedTheme) {
       console.log('Tema recuperado del storage:', savedTheme);
@@ -140,4 +138,15 @@ export class HomePage implements OnInit {
     this.router.navigate(['/intro']);
   }
 
+  async simularCargaDatos() {
+      const data = await this.obtenerDatosSimulados();
+      console.log("Datos simulados cargados:", data);
+    }
+ obtenerDatosSimulados() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve([" clasica ", "pop", "salsa"])
+      }, 3000)
+    })
+  }
 }

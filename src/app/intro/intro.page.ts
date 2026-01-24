@@ -49,7 +49,7 @@ export class IntroPage implements OnInit {
 
   constructor(
     private router: Router,
-    private storage: StorageService   
+    private storage: StorageService  
   ) { }
 
   async ngOnInit() {
