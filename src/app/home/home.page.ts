@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 
 // 2. IMPORTANTE: Importar el servicio de Storage.
 import { StorageService } from '../storage.service';
+import { Auth } from '../services/auth';
 
 // 3. Importamos Router para la navegación
 import { Router } from '@angular/router';
@@ -66,7 +67,12 @@ export class HomePage implements OnInit {
   introYaVista = false;
 
   // 5. Inyectamos el servicio en el constructor
-  constructor(private storageService: StorageService, private router: Router) {}
+  constructor(private storageService: StorageService, private router: Router, private auth: Auth) {}
+  // Método para cerrar sesión
+  async logout() {
+    await this.auth.logout();
+    this.router.navigate(['/login']);
+  }
 
   // 6. ngOnInit: Se ejecuta al cargar la página
   async ngOnInit() {

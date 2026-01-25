@@ -56,17 +56,13 @@ export class LoginPage implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
-  loginUser(credentials: any) {
+  async loginUser(credentials: any) {
     console.log(credentials);
     this.authService.loginUser(credentials).then((res) => {
       this.errorMessage = '';
-      
-      // 3. NAVEGACIÓN AQUI
-      // Usamos navigateRoot para que el usuario no pueda volver al login con el botón 'atrás'
-      this.navCtrl.navigateRoot('/intro'); 
-
+      // Redirigir a intro tras login exitoso
+      this.navCtrl.navigateRoot('/intro');
     }).catch(err => {
-      // Es buena práctica manejar errores
       console.log(err);
       this.errorMessage = 'Credenciales incorrectas';
     });

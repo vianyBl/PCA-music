@@ -2,6 +2,9 @@
    INTRO PAGE - MOBILE FIRST DESIGN
    ==================================== */
 
+/* 1. Usamos @use en lugar de @import y lo ponemos al inicio */
+@use '../../theme/variables';
+
 /* Content */
 ion-content {
   --background: var(--color-fondo);
@@ -68,16 +71,17 @@ ion-content {
   margin: 0 auto;
 }
 
-/* Main Container */
-.intro-container {
-  max-width: 480px;
-  margin: 0 auto;
-  padding-top: 3rem;
-}
-
 /* ====================================
    HERO SECTION
    ==================================== */
+
+/* Unifiqué las reglas duplicadas de intro-container aquí */
+.intro-container {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+}
+
 .hero-section {
   text-align: center;
   margin-bottom: 3rem;
@@ -98,262 +102,40 @@ ion-content {
 
 .hero-icon, ion-icon.hero-icon {
   width: 96px;
-  height: 96px;
-  font-size: 96px;
-  color: white;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .hero-title {
   font-size: 2rem;
   font-weight: 800;
-  line-height: 1.1;
-  margin: 0 0 1rem 0;
   color: var(--color-texto);
-  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
 }
 
 .hero-subtitle {
-  font-size: 1.0625rem;
-  line-height: 1.5;
+  font-size: 1rem;
   color: var(--color-texto-secundario);
-  margin: 0;
-  max-width: 32ch;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* ====================================
-   THEME SECTION
-   ==================================== */
-/* Single theme selector */
-.theme-section.single-theme {
-  display: flex;
-  justify-content: center;
-}
-
-.single-theme-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  width: 100%;
-  margin: 0 auto;
-}
-
-.theme-preview.current {
-  width: 56px;
-  height: 56px;
-  border-radius: 12px;
-  border: 1px solid rgba(0,0,0,0.06);
-}
-
-.theme-toggle {
-  padding: 0.65rem 1rem;
-  background: var(--color-primario);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: 700;
-}
-
-.theme-current-name {
-  font-size: 0.9rem;
-  color: var(--color-texto);
-}
-
-.theme-preview {
-  width: 56px;
-  height: 56px;
-  border-radius: 12px;
-  border: 1px solid rgba(0,0,0,0.06);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
-
-.theme-preview[data-theme="light"] {
-  background: linear-gradient(135deg, #f4cb89 0%, #fc7e00 100%);
-}
-
-.theme-preview[data-theme="tema-oscuro"] {
-  background: linear-gradient(135deg, #2d2d2d 0%, #121212 100%);
-}
-
-.theme-preview[data-theme="tema-rosa"] {
-  background: linear-gradient(135deg, #ff9ac2 0%, #ff6fbf 100%);
-}
-
-.theme-preview[data-theme="tema-azul"] {
-  background: linear-gradient(135deg, #66b2ff 0%, #007bff 100%);
-}
-
-.theme-name {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--color-texto);
-  letter-spacing: 0.01em;
-}
-
-
-
-/* ====================================
-   CTA SECTION
-   ==================================== */
-.cta-section {
-  margin-top: 1rem;
+  margin-bottom: 2rem;
 }
 
 .cta-button {
-  --background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-secundario) 100%);
-  --color: white;
-  --border-radius: 16px;
-  --padding-top: 1rem;
-  --padding-bottom: 1rem;
-  --box-shadow: 0 8px 24px rgba(252, 126, 0, 0.25);
-  font-size: 1.0625rem;
+  background: var(--color-primario);
+  color: #fff;
+  border-radius: 16px;
   font-weight: 700;
-  letter-spacing: 0.02em;
-  text-transform: none;
-  height: 56px;
-  margin: 0;
+  height: 48px;
 }
 
-.cta-button::part(native) {
-  transition: all 0.2s ease;
-}
-
-.cta-button:active {
-  --box-shadow: 0 4px 12px rgba(252, 126, 0, 0.3);
-}
-
-/* ====================================
-   RESPONSIVE - TABLET
-   ==================================== */
+/* Media Queries */
 @media (min-width: 576px) {
-  .intro-wrapper {
-    padding: 2rem 2.5rem 3rem;
-  }
-
   .intro-container {
-    max-width: 560px;
+    max-width: 640px;
     padding-top: 4rem;
   }
-
-  .back-button {
-    width: 48px;
-    height: 48px;
-    top: 1.5rem;
-    left: 1.5rem;
-  }
-
-  .hero-icon-wrapper {
-    width: 140px;
-    height: 140px;
-    border-radius: 36px;
-  }
-
-  .hero-icon {
-    width: 100px;
-    height: 100px;
-    font-size: 100px;
-  }
-
   .hero-title {
     font-size: 2.5rem;
   }
-
-  .hero-subtitle {
-    font-size: 1.125rem;
-    max-width: 36ch;
-  }
-
-  .theme-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-  }
-
-  .theme-option {
-    padding: 1.5rem 1rem;
-  }
-
-  .feature-icon-wrapper {
-    width: 64px;
-    height: 64px;
-  }
-
-  .feature-icon {
-    width: 44px;
-    height: 44px;
-    font-size: 44px;
-  }
-
-  .cta-button {
-    height: 60px;
-    font-size: 1.125rem;
-  }
 }
 
-/* ====================================
-   RESPONSIVE - DESKTOP
-   ==================================== */
-@media (min-width: 768px) {
-  .intro-container {
-    max-width: 640px;
-  }
-
-  .hero-section {
-    margin-bottom: 4rem;
-  }
-
-  .hero-title {
-    font-size: 3rem;
-  }
-
-  .section-title {
-    font-size: 1.25rem;
-  }
-
-  .theme-section,
-  .features-section {
-    margin-bottom: 3.5rem;
-  }
-
-  .cta-section {
-    margin-top: 1.5rem;
-  }
+.tema-oscuro .hero-title {
+  color: #f8f9fa;
 }
-
-/* ====================================
-   DARK THEME ADJUSTMENTS
-   ==================================== */
-.tema-oscuro {
-  .back-button {
-    background: #1e1e1e;
-    border-color: #333;
-  }
-
-  .hero-title,
-  .section-title,
-  .theme-name {
-    color: #f8f9fa;
-  }
-
-  .hero-subtitle {
-    color: #b0b0b0;
-  }
-
-  .theme-option {
-    background: #1e1e1e;
-    border-color: #333;
-  }
-
-  .theme-option.active {
-    background: linear-gradient(135deg, rgba(255, 152, 0, 0.12) 0%, rgba(255, 152, 0, 0.08) 100%);
-    border-color: #ff9800;
-  }
-
-
-}
-
