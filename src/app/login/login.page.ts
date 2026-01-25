@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular'; // 1. Importar NavController
+import { Auth } from '../services/auth';
 
 @Component({
   selector: 'app-login',
@@ -14,8 +15,8 @@ export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
   showPassword = false;  
+  errorMessage: string = '';
 
-  // ✅ Mensajes de validación
   validation_messages = {
     email: [
       { type: "required", message: "El email es obligatorio" },
@@ -24,34 +25,28 @@ export class LoginPage implements OnInit {
     password: [
       { type: "required", message: "La contraseña es obligatoria" },
       { type: "minlength", message: "La contraseña debe tener mínimo 8 caracteres" },
-      { type: "patternUpper", message: "Debe contener al menos una letra mayúscula" },
-      { type: "patternLower", message: "Debe contener al menos una letra minúscula" },
-      { type: "patternNumber", message: "Debe contener al menos un número" },
-      { type: "patternSpecial", message: "Debe contener al menos un carácter especial (!@#$%^&*)" }
+      // Nota: Mira la sección de "Observación Importante" abajo sobre estos tipos
+      { type: "pattern", message: "La contraseña no cumple con los requisitos (Mayúscula, minúscula, número y especial)" }
     ]
   };
 
-  constructor(private formBuilder: FormBuilder) { 
+  // 2. Inyectar navCtrl en el constructor
+  constructor(
+    private formBuilder: FormBuilder, 
+    private authService: Auth,
+    private navCtrl: NavController 
+  ) { 
     this.loginForm = this.formBuilder.group({
-      email: new FormControl(
-        '',
-        Validators.compose([
-          Validators.required,
-          Validators.email
-        ])
-      ),
-      password: new FormControl(
-        '',
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(8),
-          // Validadores personalizados con regex
-          Validators.pattern(/^(?=.*[A-Z]).+$/), // al menos una mayúscula
-          Validators.pattern(/^(?=.*[a-z]).+$/), // al menos una minúscula
-          Validators.pattern(/^(?=.*[0-9]).+$/), // al menos un número
-          Validators.pattern(/^(?=.*[!@#$%^&*]).+$/) // al menos un carácter especial
-        ])
-      )
+      email: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.email
+      ])),
+      password: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.minLength(8),
+        // Regex completo para obligar a cumplir todo
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/)
+      ]))
     });
   }
 
@@ -60,19 +55,20 @@ export class LoginPage implements OnInit {
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
-  loginUser(credentials: any){
-    console.log(credentials)
+
+  loginUser(credentials: any) {
+    console.log(credentials);
+    this.authService.loginUser(credentials).then((res) => {
+      this.errorMessage = '';
+      
+      // 3. NAVEGACIÓN AQUI
+      // Usamos navigateRoot para que el usuario no pueda volver al login con el botón 'atrás'
+      this.navCtrl.navigateRoot('/intro'); 
+
+    }).catch(err => {
+      // Es buena práctica manejar errores
+      console.log(err);
+      this.errorMessage = 'Credenciales incorrectas';
+    });
   }
-
-
-
-
-
-
-
-
-
-
-
-
 }
