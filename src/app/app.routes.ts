@@ -3,21 +3,49 @@ import { IntroGuard } from './guards/intro.guard';
 import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+
+  // 🔁 Ruta inicial
+  { path: '', redirectTo: 'intro', pathMatch: 'full' },
+
+  // 👋 Intro (solo si NO está logueada)
   {
     path: 'intro',
-    loadComponent: () => import('./intro/intro.page').then(m => m.IntroPage),
-    canActivate: [AuthGuard]
+    loadComponent: () =>
+      import('./intro/intro.page').then(m => m.IntroPage),
+    canActivate: [IntroGuard]
   },
+
+  // 🔐 Home (solo si está logueada)
   {
     path: 'home',
-    loadComponent: () => import('./home/home.page').then(m => m.HomePage),
-    canActivate: [IntroGuard, AuthGuard]
+    loadComponent: () =>
+      import('./home/home.page').then(m => m.HomePage),
+    canActivate: [AuthGuard]
   },
+
+  // 🔐 Menu (solo si está logueada)
+  {
+    path: 'menu',
+    loadComponent: () =>
+      import('./menu/menu.page').then(m => m.MenuPage),
+    canActivate: [AuthGuard]
+  },
+
+  // 🔓 Login (solo si NO está logueada)
   {
     path: 'login',
-    loadComponent: () => import('./login/login.page').then(m => m.LoginPage)
+    loadComponent: () =>
+      import('./login/login.page').then(m => m.LoginPage),
   },
-  // Fallback
-  { path: '**', redirectTo: 'intro' }
+
+  // 📝 Register (solo si NO está logueada)
+  {
+    path: 'register',
+    loadComponent: () =>
+      import('./register/register.page').then(m => m.RegisterPage),
+
+  },
+
+  // ❌ Fallback (SIEMPRE AL FINAL)
+  { path: '**', redirectTo: 'login' }
 ];

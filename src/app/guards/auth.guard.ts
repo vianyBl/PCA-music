@@ -1,16 +1,21 @@
-import { Injectable, inject } from '@angular/core';
+import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { StorageService } from '../storage.service';
 
-// Guard para rutas standalone (Angular 15+)
+// 🔁 Guard que REDIRIGE según estado de login
 export const AuthGuard: CanActivateFn = async (route, state) => {
   const storage = inject(StorageService);
   const router = inject(Router);
-  const logged = await storage.get('isLoggedIn');
-  if (logged) {
-    return true;
-  } else {
-    router.navigate(['/login']);
+
+  const isLoggedIn = await storage.get('isLoggedIn');
+
+  // ❌ NO logeada → LOGIN
+  if (!isLoggedIn) {
+    await router.navigate(['/login']);
     return false;
   }
+
+  // ✅ SÍ logeada → INTRO
+  await router.navigate(['/intro']);
+  return false;
 };
