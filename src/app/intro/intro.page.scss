@@ -3,7 +3,7 @@
    ==================================== */
 
 /* 1. Usamos @use en lugar de @import y lo ponemos al inicio */
-@use '../../theme/variables';
+@use '../../theme/variables' as *;
 
 /* Content */
 ion-content {

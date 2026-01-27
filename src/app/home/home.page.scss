@@ -1,3 +1,5 @@
+@use '../../theme/variables' as *;
+
 /* ====================================
    HOME PAGE - MOBILE FIRST
    ==================================== */
@@ -151,7 +153,6 @@ swiper-slide {
 }
 
  // SCSS optimizado: reglas duplicadas y selectores poco usados eliminados, media queries simplificadas.
-@import '../../theme/variables';
 
 .home-container {
   max-width: 700px;

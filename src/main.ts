@@ -1,3 +1,6 @@
+import { setAssetPath } from 'ionicons';
+// Aseguramos una URL ABSOLUTA a la carpeta donde copiamos los SVG (ver angular.json)
+setAssetPath(`${location.origin}/svg/`);
 import { enableProdMode, importProvidersFrom } from '@angular/core'; // 1. Importar importProvidersFrom
 import { bootstrapApplication } from '@angular/platform-browser';
 import { RouteReuseStrategy, provideRouter, withPreloading, PreloadAllModules } from '@angular/router';

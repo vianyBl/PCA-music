@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { StorageService } from '../storage.service';
 
@@ -11,7 +12,6 @@ export class Auth {
   // 🔐 LOGIN
   async loginUser(credentials: any): Promise<string> {
     return new Promise(async (accept, reject) => {
-
       const registeredEmail = await this.storage.get('registeredEmail');
       const registeredPassword = await this.storage.get('registeredPassword');
 
@@ -21,26 +21,32 @@ export class Auth {
       ) {
         await this.storage.set('isLoggedIn', true);
         await this.storage.set('user', credentials.email);
-
         accept('login correcto');
       } else {
         await this.storage.remove('isLoggedIn');
         await this.storage.remove('user');
-
         reject('login incorrecto');
       }
     });
   }
 
   // 📝 REGISTER
-  async register(email: string, password: string): Promise<string> {
+  async register(
+    email: string,
+    password: string,
+    extra?: { username?: string; birthdate?: string }
+  ): Promise<string> {
     return new Promise(async (accept) => {
-
       await this.storage.set('registeredEmail', email);
       await this.storage.set('registeredPassword', password);
+      if (extra?.username) {
+        await this.storage.set('registeredUsername', extra.username);
+      }
+      if (extra?.birthdate) {
+        await this.storage.set('registeredBirthdate', extra.birthdate);
+      }
       await this.storage.set('isLoggedIn', true);
       await this.storage.set('user', email);
-
       accept('registro correcto');
     });
   }

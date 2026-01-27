@@ -1,22 +1,19 @@
 <ion-content class="login-content" fullscreen>
 
   <!-- Card principal -->
-  <div class="login-card">
+  <ion-card class="login-card ion-padding fade-in">
 
-    <!-- Header con imagen -->
-    <div class="login-header">
-      <h2>Welcome myApp Spotify</h2>
-  
+    <!-- Header con imagen / marca -->
+    <div class="login-header" role="banner" aria-labelledby="app-title" aria-describedby="app-subtitle">
+      <div class="brand" role="img" aria-label="Logo myApp">
+        <img src="assets/user.jpg" alt="Logo myApp" width="72" height="72" loading="lazy" />
+      </div>
+      <h2 id="app-title" class="app-title">Welcome to myApp</h2>
+      <p id="app-subtitle" class="app-subtitle">Accede a tu cuenta para continuar</p>
     </div>
 
-    <!-- Imagen de usuario -->
-    <figure class="profile-default-image ion-text-center">
-      <img src="assets/user.jpg" />
-      <p>Ingresa tus datos</p>
-    </figure>
-
-    <!-- Formulario -->
-    <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm.value)">
+    <!-- Formulario elegante -->
+    <form [formGroup]="loginForm" class="login-form" (ngSubmit)="loginUser(loginForm.value)">
 
       <!-- Email -->
       <ion-item lines="none" class="custom-input">
@@ -24,16 +21,14 @@
         <ion-input
           type="email"
           placeholder="Email o usuario"
-          formControlName="email">
+          formControlName="email"
+          aria-label="Email">
         </ion-input>
       </ion-item>
 
-      <div class="validation-message"
-        *ngFor="let validation of validation_messages.email">
-        <div *ngIf="loginForm.get('email')?.hasError(validation.type)
-          && loginForm.get('email')?.dirty">
-          {{ validation.message }}
-        </div>
+      <div class="validation-message" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.dirty">
+        <div *ngIf="loginForm.get('email')?.hasError('required')">El email es obligatorio</div>
+        <div *ngIf="loginForm.get('email')?.hasError('email')">Introduce un email válido</div>
       </div>
 
       <!-- Password -->
@@ -42,31 +37,32 @@
         <ion-input
           [type]="showPassword ? 'text' : 'password'"
           placeholder="Contraseña"
-          formControlName="password">
+          formControlName="password"
+          aria-label="Contraseña">
         </ion-input>
         <ion-icon
           slot="end"
           [name]="showPassword ? 'eye-off' : 'eye'"
           class="toggle-password-icon"
-          (click)="togglePasswordVisibility()">
+          (click)="togglePasswordVisibility()"
+          role="button"
+          aria-hidden="false">
         </ion-icon>
       </ion-item>
 
-      <div class="validation-message"
-        *ngFor="let validation of validation_messages.password">
-        <div *ngIf="loginForm.get('password')?.hasError(validation.type)
-          && loginForm.get('password')?.dirty">
-          {{ validation.message }}
-        </div>
+      <div class="validation-message" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.dirty">
+        <div *ngIf="loginForm.get('password')?.hasError('required')">La contraseña es obligatoria</div>
+        <div *ngIf="loginForm.get('password')?.hasError('minlength')">Mínimo 6 caracteres</div>
+        <div *ngIf="loginForm.get('password')?.hasError('pattern' )">Incluye mayúscula, minúscula, número y carácter especial</div>
       </div>
 
       <!-- Opciones -->
       <div class="login-options">
-        <ion-item lines="none">
+        <ion-item lines="none" class="remember">
           <ion-checkbox slot="start"></ion-checkbox>
           <ion-label>Remember</ion-label>
         </ion-item>
-        <a class="forgot">Forgot password?</a>
+        <a class="forgot" routerLink="/forgot">¿Olvidaste tu contraseña?</a>
       </div>
 
       <!-- Botón LOGIN -->
@@ -76,20 +72,15 @@
         class="login-button"
         [disabled]="!loginForm.valid"
         type="submit">
-        LOGIN
+        INICIAR SESIÓN
       </ion-button>
 
-      <!-- Botón Create Account -->
-      <ion-button
-        expand="block"
-        fill="outline"
-        shape="round"
-        color="secondary"
-        routerLink="/register">
-        Create Account
-      </ion-button>
+      <div class="footer-links">
+        <span>¿No tienes cuenta?</span>
+        <a routerLink="/register" class="link-register">Regístrate</a>
+      </div>
 
     </form>
-  </div>
+  </ion-card>
 
 </ion-content>

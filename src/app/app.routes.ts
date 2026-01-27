@@ -5,14 +5,14 @@ import { AuthGuard } from './guards/auth.guard';
 export const routes: Routes = [
 
   // 🔁 Ruta inicial
-  { path: '', redirectTo: 'intro', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
 
-  // 👋 Intro (solo si NO está logueada)
+  // 👋 Intro (solo si está logueada)
   {
     path: 'intro',
     loadComponent: () =>
       import('./intro/intro.page').then(m => m.IntroPage),
-    canActivate: [IntroGuard]
+    canActivate: [AuthGuard]
   },
 
   // 🔐 Home (solo si está logueada)
@@ -31,19 +31,18 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
 
-  // 🔓 Login (solo si NO está logueada)
+  // 🔓 Login (acceso libre)
   {
     path: 'login',
     loadComponent: () =>
       import('./login/login.page').then(m => m.LoginPage),
   },
 
-  // 📝 Register (solo si NO está logueada)
+  // 📝 Register (acceso libre)
   {
     path: 'register',
     loadComponent: () =>
       import('./register/register.page').then(m => m.RegisterPage),
-
   },
 
   // ❌ Fallback (SIEMPRE AL FINAL)

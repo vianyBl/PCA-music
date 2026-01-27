@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { IonicModule, NavController } from '@ionic/angular'; // 1. Importar NavController
+import { RouterLink } from '@angular/router';
 import { Auth } from '../services/auth';
 
 @Component({
@@ -9,7 +10,7 @@ import { Auth } from '../services/auth';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [ CommonModule, FormsModule, IonicModule, ReactiveFormsModule ]
+  imports: [ CommonModule, FormsModule, IonicModule, ReactiveFormsModule, RouterLink ]
 })
 export class LoginPage implements OnInit {
 
@@ -24,9 +25,9 @@ export class LoginPage implements OnInit {
     ],
     password: [
       { type: "required", message: "La contraseña es obligatoria" },
-      { type: "minlength", message: "La contraseña debe tener mínimo 8 caracteres" },
+      { type: "minlength", message: "La contraseña debe tener mínimo 6 caracteres" },
       // Nota: Mira la sección de "Observación Importante" abajo sobre estos tipos
-      { type: "pattern", message: "La contraseña no cumple con los requisitos (Mayúscula, minúscula, número y especial)" }
+      { type: "pattern", message: "La contraseña debe incluir mayúscula, minúscula, número y un carácter especial (sin espacios)" }
     ]
   };
 
@@ -44,8 +45,8 @@ export class LoginPage implements OnInit {
       password: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(6),
-        // Regex completo para obligar a cumplir todo
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/)
+        // Regex completo para obligar a cumplir todo (mínimo 6, mayúscula, minúscula, número y carácter especial, sin espacios)
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s])[^\s]{6,}$/)
       ]))
     });
   }
@@ -57,14 +58,19 @@ export class LoginPage implements OnInit {
   }
 
   async loginUser(credentials: any) {
-    console.log(credentials);
-    this.authService.loginUser(credentials).then((res) => {
-      this.errorMessage = '';
+    this.errorMessage = '';
+    try {
+      await this.authService.loginUser(credentials);
       // Redirigir a intro tras login exitoso
       this.navCtrl.navigateRoot('/intro');
-    }).catch(err => {
-      console.log(err);
-      this.errorMessage = 'Credenciales incorrectas';
-    });
+    } catch (err) {
+      // Mejor feedback: distinguir entre usuario no registrado y contraseña incorrecta
+      const registeredEmail = await this.authService['storage'].get('registeredEmail');
+      if (!registeredEmail) {
+        this.errorMessage = 'Usuario no registrado. Por favor crea una cuenta.';
+      } else {
+        this.errorMessage = 'Credenciales incorrectas.';
+      }
+    }
   }
 }
