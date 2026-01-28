@@ -1,6 +1,7 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
+import { Music } from '../services/music';
 
 // Importar el servicio de Storage
 import { StorageService } from '../storage.service';
@@ -53,6 +54,9 @@ export class HomePage implements OnInit {
     }
   ];
 
+  tracks: any;
+  almbus: any;
+
   // Género activo
   selectedGenre = this.genres[0];
 
@@ -63,7 +67,12 @@ export class HomePage implements OnInit {
   // Propiedad para saber si la intro ya fue vista
   introYaVista = false;
 
-  constructor(private storageService: StorageService, private router: Router, private auth: Auth) {}
+  constructor(
+    private storageService: StorageService,
+    private router: Router,
+    private auth: Auth,
+    private music: Music
+  ) {}
 
   // Método para cerrar sesión
   async logout() {
@@ -74,6 +83,8 @@ export class HomePage implements OnInit {
   async ngOnInit() {
     const savedTheme = await this.storageService.get(THEME_KEY);
     await this.simularCargaDatos();
+    this.loadTracks();
+    this.loadAlmbus();
 
     if (savedTheme) {
       console.log('Tema recuperado del storage:', savedTheme);
@@ -96,6 +107,21 @@ export class HomePage implements OnInit {
   // =========================
   // MÉTODOS
   // =========================
+
+  loadTracks() {
+    this.music.getTracks().then(tracks => {
+      this.tracks = tracks;
+      console.log(this.tracks, " las canciones ");
+    });
+  }
+
+  loadAlmbus() {
+    this.music.getAlbums().then(albums => {
+      this.almbus = albums;
+      console.log(this.almbus, " los álbumes ");
+    });
+  }
+
   selectGenre(genre: any) {
     this.selectedGenre = genre;
   }
@@ -146,8 +172,8 @@ export class HomePage implements OnInit {
   obtenerDatosSimulados() {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(["clasica", "pop", "salsa"])
-      }, 3000)
-    })
+        resolve(["clasica", "pop", "salsa"]);
+      }, 3000);
+    });
   }
 }

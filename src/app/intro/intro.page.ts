@@ -72,11 +72,11 @@ export class IntroPage implements OnInit {
       // Desenfocar cualquier elemento activo antes de navegar para evitar warnings de aria-hidden
       try { (document.activeElement as HTMLElement)?.blur(); } catch (e) { /* noop */ }
       // Navegar al Home
-      this.router.navigateByUrl("/home");
+      this.router.navigateByUrl("menu/home");
     } catch (error) {
       console.error("Error al guardar en storage:", error);
       // Navegamos de todos modos para no bloquear al usuario
-      this.router.navigateByUrl("/home");
+      this.router.navigateByUrl("menu/home");
     }
   }
 
