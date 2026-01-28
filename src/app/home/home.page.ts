@@ -1,13 +1,12 @@
-
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 
-// 2. IMPORTANTE: Importar el servicio de Storage.
+// Importar el servicio de Storage
 import { StorageService } from '../storage.service';
 import { Auth } from '../services/auth';
 
-// 3. Importamos Router para la navegación
+// Importamos Router para la navegación
 import { Router } from '@angular/router';
 
 // Definimos la clave para guardar en la base de datos local
@@ -57,24 +56,21 @@ export class HomePage implements OnInit {
   // Género activo
   selectedGenre = this.genres[0];
 
-  // =========================
-  // SISTEMA DE TEMAS CORREGIDO
-  // =========================
+  // SISTEMA DE TEMAS
   temas = ['light', 'tema-oscuro', 'tema-rosa', 'tema-azul'];
   temaActualIndex = 0; // Empieza en 0 (light)
 
   // Propiedad para saber si la intro ya fue vista
   introYaVista = false;
 
-  // 5. Inyectamos el servicio en el constructor
   constructor(private storageService: StorageService, private router: Router, private auth: Auth) {}
+
   // Método para cerrar sesión
   async logout() {
     await this.auth.logout();
     this.router.navigate(['/login']);
   }
 
-  // 6. ngOnInit: Se ejecuta al cargar la página
   async ngOnInit() {
     const savedTheme = await this.storageService.get(THEME_KEY);
     await this.simularCargaDatos();
@@ -88,16 +84,12 @@ export class HomePage implements OnInit {
       }
     }
 
-    // =========================
     // Verificar si ya se vio la intro
-    // =========================
     const visto = await this.storageService.get('introVisto');
     this.introYaVista = visto === true;
 
     if (this.introYaVista) {
       console.log("El usuario ya visitó la intro anteriormente");
-      // Aquí puedes decidir si ocultar el botón VER INTRO
-      // o redirigir automáticamente al home sin mostrar intro
     }
   }
 
@@ -106,6 +98,13 @@ export class HomePage implements OnInit {
   // =========================
   selectGenre(genre: any) {
     this.selectedGenre = genre;
+  }
+
+  // Nuevo método: actualizar género al mover el slide
+  onSlideChange(event: any) {
+    const swiper = event.target.swiper; // Obtenemos instancia de Swiper
+    const index = swiper.activeIndex;   // Índice actual
+    this.selectedGenre = this.genres[index]; // Actualizamos descripción
   }
 
   CambiarTema() {
@@ -127,14 +126,9 @@ export class HomePage implements OnInit {
     }
   }
 
-  // =========================
-  // FUNCIÓN PARA EL BOTÓN "VER INTRO"
-  // =========================
   async irAIntro() {
-
     try { (document.activeElement as HTMLElement)?.blur(); } catch (e) { /* noop */ }
 
-    // Borramos la clave para permitir ver la intro de nuevo
     try {
       await this.storageService.remove('introVisto');
     } catch (e) {
@@ -145,13 +139,14 @@ export class HomePage implements OnInit {
   }
 
   async simularCargaDatos() {
-      const data = await this.obtenerDatosSimulados();
-      console.log("Datos simulados cargados:", data);
-    }
- obtenerDatosSimulados() {
+    const data = await this.obtenerDatosSimulados();
+    console.log("Datos simulados cargados:", data);
+  }
+
+  obtenerDatosSimulados() {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve([" clasica ", "pop", "salsa"])
+        resolve(["clasica", "pop", "salsa"])
       }, 3000)
     })
   }

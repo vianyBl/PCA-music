@@ -1,20 +1,41 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { StorageService } from '../storage.service';
+import { Auth } from '../services/auth';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.page.html',
   styleUrls: ['./menu.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule,IonicModule]
 })
 export class MenuPage implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router,private storageService: StorageService, private auth: Auth) { }
 
   ngOnInit() {
   }
+
+  async irAIntro() {
+    try { (document.activeElement as HTMLElement)?.blur(); } catch (e) { /* noop */ }
+
+    try {
+      await this.storageService.remove('introVisto');
+    } catch (e) {
+      console.warn('No se pudo borrar introVisto del storage', e);
+    }
+
+    this.router.navigate(['/intro']);
+  }
+
+  async logout() {
+    await this.auth.logout();
+    this.router.navigate(['/login']);
+  }
+
 
 }

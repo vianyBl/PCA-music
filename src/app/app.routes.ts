@@ -14,21 +14,19 @@ export const routes: Routes = [
       import('./intro/intro.page').then(m => m.IntroPage),
     canActivate: [AuthGuard]
   },
-
-  // 🔐 Home (solo si está logueada)
-  {
-    path: 'home',
-    loadComponent: () =>
-      import('./home/home.page').then(m => m.HomePage),
-    canActivate: [AuthGuard]
-  },
-
-  // 🔐 Menu (solo si está logueada)
+  
   {
     path: 'menu',
     loadComponent: () =>
       import('./menu/menu.page').then(m => m.MenuPage),
-    canActivate: [AuthGuard]
+    children: [
+      {
+        path: 'home',
+        loadComponent: () =>
+          import('./home/home.page').then(m => m.HomePage),
+        canActivate: [AuthGuard]
+      }
+    ]
   },
 
   // 🔓 Login (acceso libre)
