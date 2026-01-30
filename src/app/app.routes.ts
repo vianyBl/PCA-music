@@ -14,7 +14,7 @@ export const routes: Routes = [
       import('./intro/intro.page').then(m => m.IntroPage),
     canActivate: [AuthGuard]
   },
-  
+
   {
     path: 'menu',
     loadComponent: () =>
@@ -24,6 +24,12 @@ export const routes: Routes = [
         path: 'home',
         loadComponent: () =>
           import('./home/home.page').then(m => m.HomePage),
+        canActivate: [AuthGuard, IntroGuard]
+      },
+      {
+        path: 'artist',
+        loadComponent: () =>
+          import('./artist/artist.page').then(m => m.ArtistPage),
         canActivate: [AuthGuard, IntroGuard]
       }
     ]

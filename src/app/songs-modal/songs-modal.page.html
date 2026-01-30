@@ -1,0 +1,45 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+        <ion-title>{{ artistName }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="dismiss()">
+                <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="songs-container">
+        <div class="songs-header">
+            <ion-icon name="list-outline" class="header-icon"></ion-icon>
+            <h2>Top Canciones</h2>
+            <p>Escucha los mejores temas en Deezer</p>
+        </div>
+
+        <ion-list lines="none">
+            <ion-item *ngFor="let song of songs" class="song-item">
+                <ion-thumbnail slot="start">
+                    <img [src]="song.image" [alt]="song.name" />
+                </ion-thumbnail>
+                <ion-label>
+                    <h3>{{ song.name }}</h3>
+                    <p>{{ song.album_name }}</p>
+                </ion-label>
+                <div slot="end" class="song-footer">
+                    <span class="duration">{{ formatDuration(song.duration) }}</span>
+                    <ion-button fill="clear" (click)="playSong(song)"
+                        [color]="currentlyPlayingSong === song ? 'success' : 'primary'">
+                        <ion-icon [name]="currentlyPlayingSong === song ? 'pause-outline' : 'play-outline'"
+                            slot="icon-only"></ion-icon>
+                    </ion-button>
+                </div>
+            </ion-item>
+        </ion-list>
+
+        <div *ngIf="songs.length === 0" class="empty-state">
+            <ion-icon name="musical-note-outline"></ion-icon>
+            <p>No se encontraron canciones disponibles.</p>
+        </div>
+    </div>
+</ion-content>

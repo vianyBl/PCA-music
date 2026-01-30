@@ -1,0 +1,94 @@
+ion-header {
+    ion-toolbar {
+        --background: rgba(18, 18, 18, 0.8);
+        --color: white;
+        backdrop-filter: blur(10px);
+    }
+}
+
+ion-content {
+    --background: #121212;
+    color: white;
+}
+
+.songs-container {
+    padding: 20px;
+}
+
+.songs-header {
+    text-align: center;
+    margin-bottom: 30px;
+
+    .header-icon {
+        font-size: 3.5rem;
+        color: var(--ion-color-primary);
+        margin-bottom: 10px;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+        font-weight: 800;
+        margin: 0;
+    }
+
+    p {
+        color: #888;
+        margin: 5px 0 0;
+    }
+}
+
+.song-item {
+    --background: rgba(255, 255, 255, 0.05);
+    --border-radius: 16px;
+    margin-bottom: 12px;
+    --padding-start: 12px;
+    --padding-end: 12px;
+    --padding-top: 8px;
+    --padding-bottom: 8px;
+    transition: transform 0.2s ease;
+
+    &:active {
+        transform: scale(0.98);
+    }
+
+    ion-thumbnail {
+        --border-radius: 8px;
+        width: 50px;
+        height: 50px;
+    }
+
+    ion-label {
+        h3 {
+            font-weight: 600;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        p {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+    }
+
+    .song-footer {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .duration {
+            font-size: 0.8rem;
+            color: #666;
+        }
+    }
+}
+
+.empty-state {
+    text-align: center;
+    margin-top: 50px;
+    color: #555;
+
+    ion-icon {
+        font-size: 4rem;
+        margin-bottom: 15px;
+    }
+}

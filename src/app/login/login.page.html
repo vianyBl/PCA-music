@@ -1,86 +1,70 @@
-<ion-content class="login-content" fullscreen>
+<ion-content [fullscreen]="true">
+  <div class="auth-wrapper">
+    <!-- Decorative background -->
+    <div class="blob-bg"></div>
+    <div class="blob-bg secondary"></div>
 
-  <!-- Card principal -->
-  <ion-card class="login-card ion-padding fade-in">
-
-    <!-- Header con imagen / marca -->
-    <div class="login-header" role="banner" aria-labelledby="app-title" aria-describedby="app-subtitle">
-      <div class="brand" role="img" aria-label="Logo myApp">
-        <img src="assets/user.jpg" alt="Logo myApp" width="72" height="72" loading="lazy" />
+    <div class="auth-container animate-up">
+      <div class="brand-section">
+        <div class="logo-box">
+          <ion-icon name="musical-notes-outline"></ion-icon>
+        </div>
+        <h1 class="text-gradient">MusicApp</h1>
+        <p>Tu música, tu estilo, en un solo lugar.</p>
       </div>
-      <h2 id="app-title" class="app-title">Welcome to myApp</h2>
-      <p id="app-subtitle" class="app-subtitle">Accede a tu cuenta para continuar</p>
+
+      <ion-card class="glass-card">
+        <div class="card-header">
+          <h2>Iniciar Sesión</h2>
+          <p>Bienvenido de nuevo</p>
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm.value)">
+          <div class="input-group">
+            <ion-item lines="none" class="custom-input">
+              <ion-icon name="mail-outline" slot="start"></ion-icon>
+              <ion-input type="email" placeholder="Correo electrónico" formControlName="email">
+              </ion-input>
+            </ion-item>
+            <div class="error-text" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.dirty">
+              Email inválido o campo vacío
+            </div>
+          </div>
+
+          <div class="input-group">
+            <ion-item lines="none" class="custom-input">
+              <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+              <ion-input [type]="showPassword ? 'text' : 'password'" placeholder="Contraseña"
+                formControlName="password">
+              </ion-input>
+              <ion-button fill="clear" slot="end" (click)="togglePasswordVisibility()" class="eye-btn">
+                <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </div>
+
+          <div class="extra-options">
+            <ion-item lines="none" class="check-item">
+              <ion-checkbox slot="start"></ion-checkbox>
+              <ion-label>Recordarme</ion-label>
+            </ion-item>
+            <a routerLink="/forgot" class="forgot-link">¿Olvidaste tu contraseña?</a>
+          </div>
+
+          <div class="error-summary" *ngIf="errorMessage">
+            {{ errorMessage }}
+          </div>
+
+          <ion-button expand="block" shape="round" type="submit" [disabled]="!loginForm.valid" class="main-btn">
+            Entrar
+          </ion-button>
+        </form>
+      </ion-card>
+
+      <div class="footer-prompt">
+        <span>¿No tienes una cuenta?</span>
+        <a routerLink="/register">Regístrate gratis</a>
+      </div>
     </div>
-
-    <!-- Formulario elegante -->
-    <form [formGroup]="loginForm" class="login-form" (ngSubmit)="loginUser(loginForm.value)">
-
-      <!-- Email -->
-      <ion-item lines="none" class="custom-input">
-        <ion-icon name="person" slot="start"></ion-icon>
-        <ion-input
-          type="email"
-          placeholder="Email o usuario"
-          formControlName="email"
-          aria-label="Email">
-        </ion-input>
-      </ion-item>
-
-      <div class="validation-message" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.dirty">
-        <div *ngIf="loginForm.get('email')?.hasError('required')">El email es obligatorio</div>
-        <div *ngIf="loginForm.get('email')?.hasError('email')">Introduce un email válido</div>
-      </div>
-
-      <!-- Password -->
-      <ion-item lines="none" class="custom-input">
-        <ion-icon name="lock-closed" slot="start"></ion-icon>
-        <ion-input
-          [type]="showPassword ? 'text' : 'password'"
-          placeholder="Contraseña"
-          formControlName="password"
-          aria-label="Contraseña">
-        </ion-input>
-        <ion-icon
-          slot="end"
-          [name]="showPassword ? 'eye-off' : 'eye'"
-          class="toggle-password-icon"
-          (click)="togglePasswordVisibility()"
-          role="button"
-          aria-hidden="false">
-        </ion-icon>
-      </ion-item>
-
-      <div class="validation-message" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.dirty">
-        <div *ngIf="loginForm.get('password')?.hasError('required')">La contraseña es obligatoria</div>
-        <div *ngIf="loginForm.get('password')?.hasError('minlength')">Mínimo 6 caracteres</div>
-        <div *ngIf="loginForm.get('password')?.hasError('pattern' )">Incluye mayúscula, minúscula, número y carácter especial</div>
-      </div>
-
-      <!-- Opciones -->
-      <div class="login-options">
-        <ion-item lines="none" class="remember">
-          <ion-checkbox slot="start"></ion-checkbox>
-          <ion-label>Remember</ion-label>
-        </ion-item>
-        <a class="forgot" routerLink="/forgot">¿Olvidaste tu contraseña?</a>
-      </div>
-
-      <!-- Botón LOGIN -->
-      <ion-button
-        expand="block"
-        shape="round"
-        class="login-button"
-        [disabled]="!loginForm.valid"
-        type="submit">
-        INICIAR SESIÓN
-      </ion-button>
-
-      <div class="footer-links">
-        <span>¿No tienes cuenta?</span>
-        <a routerLink="/register" class="link-register">Regístrate</a>
-      </div>
-
-    </form>
-  </ion-card>
-
+  </div>
 </ion-content>

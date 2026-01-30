@@ -1,72 +1,93 @@
-   <ion-header>
-          <ion-toolbar>
-            <ion-buttons slot="start">
-              <ion-menu-button></ion-menu-button>
-            </ion-buttons>
-            <ion-title>Home</ion-title>
-          </ion-toolbar>
-        </ion-header>
-  <!-- Contenido principal -->
-  <ion-content  >
-    <div class="home-wrapper">
-      <div class="home-container">
-       
-        <!-- Header Section -->
-    
-          <h1 class="home-title">Descubre Música</h1>
-          <p class="home-subtitle">Explora géneros y encuentra tu sonido perfecto</p>
-      
-        <!-- Genres Carousel -->
-        <section class="genres-section" *ngIf="genres && genres.length > 0">
-          <swiper-container 
-            pagination="true" 
-            [loop]="genres.length > 2" 
-            slides-per-view="1"
-            space-between="16">
-            <swiper-slide
-              *ngFor="let genre of genres"
-              (click)="selectGenre(genre)"
-              [class.selected]="selectedGenre === genre"
-              aria-label="Seleccionar género {{ genre.title }}">
-              <ion-card class="genre-card" [class.selected]="selectedGenre === genre" role="button" tabindex="0" (keyup.enter)="selectGenre(genre)">
-                <ion-card-header>
-                  <div class="genre-image-wrapper">
-                    <img [src]="genre.img" [alt]="genre.title" class="genre-image" loading="lazy" />
-                    <div class="genre-overlay">
-                      <h2 class="genre-title">{{ genre.title }}</h2>
-                    </div>
-                  </div>
-                </ion-card-header>
-                <ion-card-content>
-                  <p class="description-text">{{ genre.description }}</p>
-                </ion-card-content>
-              </ion-card>
-            </swiper-slide>
-          </swiper-container>
-        </section>
+<ion-header class="ion-no-border glass-effect">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="text-gradient">MusicApp</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleTheme()">
+        <ion-icon slot="icon-only" name="color-palette-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out-outline" color="danger"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-        <!-- Action Buttons -->
-        <section class="actions-section" role="group" aria-label="Acciones principales">
-          <button class="action-btn action-btn-primary" (click)="CambiarTema()" aria-label="Cambiar tema" role="button">
-            <span class="icon-box">
-              <ion-icon name="color-palette" aria-label="Icono cambiar tema"></ion-icon>
-            </span>
-            <span class="action-text">Cambiar Tema</span>
-          </button>
-          <button class="action-btn action-btn-secondary" (click)="irAIntro()" aria-label="Ver intro" role="button">
-            <span class="icon-box">
-              <ion-icon name="refresh" aria-label="Icono ver intro"></ion-icon>
-            </span>
-            <span class="action-text">Ver Intro</span>
-          </button>
-          <button class="action-btn action-btn-secondary" (click)="logout()" aria-label="Cerrar sesión" role="button">
-            <span class="icon-box">
-              <ion-icon name="log-out" aria-label="Icono cerrar sesión"></ion-icon>
-            </span>
-            <span class="action-text">Cerrar sesión</span>
-          </button>
-        </section>
+<ion-content [fullscreen]="true">
+  <div class="home-container">
 
+    <!-- Welcome Header -->
+    <header class="welcome-section animate-up">
+      <div class="welcome-text">
+        <p class="greeting">{{ greeting }}</p>
+        <h1 class="user-name">Explora lo Nuevo</h1>
       </div>
+      <ion-avatar class="user-avatar">
+        <img src="https://i.pravatar.cc/150?u=music" alt="avatar" />
+      </ion-avatar>
+    </header>
+
+    <!-- Popular Tracks Swiper -->
+    <section class="section animate-up" style="animation-delay: 0.1s">
+      <div class="section-header">
+        <h2 class="section-title">Tracks Destacados</h2>
+        <ion-button fill="clear" size="small">Ver todo</ion-button>
+      </div>
+
+      <swiper-container [slidesPerView]="1.2" [spaceBetween]="20" [centeredSlides]="false" class="popular-slider">
+        <swiper-slide *ngFor="let track of topTracks">
+          <div class="track-card">
+            <div class="card-image">
+              <img [src]="track.album?.cover_medium" [alt]="track.title" />
+              <div class="play-overlay">
+                <ion-icon name="play-circle-outline"></ion-icon>
+              </div>
+            </div>
+            <div class="card-info">
+              <h3>{{ track.title }}</h3>
+              <p>{{ track.artist?.name }}</p>
+            </div>
+          </div>
+        </swiper-slide>
+        <div *ngIf="isLoading" class="loading-cards">
+          <ion-skeleton-text animated style="width: 280px; height: 180px; border-radius: 20px;"></ion-skeleton-text>
+        </div>
+      </swiper-container>
+    </section>
+
+    <!-- Top Albums Grid -->
+    <section class="section animate-up" style="animation-delay: 0.2s">
+      <div class="section-header">
+        <h2 class="section-title">Álbumes Tendencia</h2>
+      </div>
+
+      <div class="albums-grid">
+        <div class="album-item" *ngFor="let album of topAlbums?.slice(0, 6)">
+          <div class="album-cover">
+            <img [src]="album.cover_medium" [alt]="album.title" />
+          </div>
+          <div class="album-info">
+            <h4>{{ album.title }}</h4>
+            <p>{{ album.artist?.name }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="section quick-actions animate-up" style="animation-delay: 0.3s">
+      <ion-button (click)="irAIntro()" expand="block" fill="outline" shape="round" color="medium">
+        <ion-icon name="refresh-outline" slot="start"></ion-icon>
+        Reiniciar Tutorial
+      </ion-button>
+    </section>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="ion-text-center padding-md">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
     </div>
-  </ion-content>
+
+  </div>
+</ion-content>

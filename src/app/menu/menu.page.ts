@@ -2,20 +2,28 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { StorageService } from '../storage.service';
 import { Auth } from '../services/auth';
+import { addIcons } from 'ionicons';
+import { homeOutline, peopleOutline, settingsOutline, logOutOutline, playCircleOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.page.html',
   styleUrls: ['./menu.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule,IonicModule]
+  imports: [CommonModule, FormsModule, IonicModule, RouterLink]
 })
 export class MenuPage implements OnInit {
 
-  constructor(private router: Router,private storageService: StorageService, private auth: Auth) { }
+  constructor(
+    private router: Router,
+    private storageService: StorageService,
+    private auth: Auth
+  ) {
+    addIcons({ homeOutline, peopleOutline, settingsOutline, logOutOutline, playCircleOutline });
+  }
 
   ngOnInit() {
   }
@@ -36,6 +44,5 @@ export class MenuPage implements OnInit {
     await this.auth.logout();
     this.router.navigate(['/login']);
   }
-
 
 }

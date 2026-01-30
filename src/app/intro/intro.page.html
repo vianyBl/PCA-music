@@ -1,41 +1,39 @@
 <ion-content [fullscreen]="true">
   <div class="intro-wrapper">
+    <!-- Background Decor -->
+    <div class="blob-bg"></div>
+    <div class="blob-bg secondary"></div>
 
-    <div class="intro-container">
-
-      <!-- Slides Section -->
-      <section class="slides-section" [ngClass]="selectedTheme" [class.tema-oscuro]="selectedTheme === 'tema-oscuro'">
-        <swiper-container pagination="true" loop="true" slides-per-view="1" space-between="12" autoplay="{ delay: 3500 }">
-          <swiper-slide *ngFor="let slide of slides">
-            <div class="slide-content ion-padding ion-text-center" [class.feature-slide]="slide.img === 'musical-notes'">
-              <img [src]="slide.img" [alt]="slide.title" class="genre-image" loading="lazy" />
-              <h2 class="slide-title">{{ slide.title }}</h2>
-              <p class="slide-desc">{{ slide.desc }}</p>
-            </div>
-          </swiper-slide>
-        </swiper-container>
-      </section>
-
-      <!-- Theme Selector (Single Button) -->
-      <section class="theme-section single-theme">
-        <div class="single-theme-row">
-          <ion-button class="theme-toggle" (click)="nextTheme()" aria-label="Cambiar tema" fill="solid" size="small">
-            Cambiar tema
-          </ion-button>
-          <span class="theme-current-name">{{ selectedTheme === 'tema-oscuro' ? 'Oscuro' : selectedTheme === 'tema-rosa' ? 'Rosa' : selectedTheme === 'tema-azul' ? 'Azul' : 'Claro' }}</span>
+    <swiper-container pagination="true" class="intro-slider">
+      <swiper-slide *ngFor="let slide of slides; let last = last" class="slide-content">
+        <div class="image-container animate-up">
+          <img [src]="slide.img" [alt]="slide.title" />
+          <div class="icon-badge" [attr.color]="slide.color">
+            <ion-icon [name]="slide.icon"></ion-icon>
+          </div>
         </div>
-      </section>
-      <!-- CTA Button -->
-      <div class="cta-section">
-        <ion-button 
-          expand="block" 
-          size="large"
-          (click)="goBack()" 
-          class="cta-button"
-          aria-label="Comenzar">
-          Comenzar
-        </ion-button>
-      </div>
-    </div>
+
+        <div class="text-container">
+          <h1 class="slide-title">{{ slide.title }}</h1>
+          <p class="slide-desc">{{ slide.desc }}</p>
+        </div>
+
+        <div class="footer-actions" *ngIf="last">
+          <ion-button fill="clear" (click)="toggleTheme()" class="theme-btn">
+            <ion-icon name="color-palette-outline" slot="start"></ion-icon>
+            Tema: {{ getCurrentTheme() | titlecase }}
+          </ion-button>
+
+          <ion-button expand="block" shape="round" (click)="finishIntro()" class="start-btn">
+            Comenzar
+            <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+          </ion-button>
+        </div>
+      </swiper-slide>
+    </swiper-container>
+
+    <ion-button *ngIf="true" fill="clear" (click)="finishIntro()" class="skip-btn">
+      Saltar
+    </ion-button>
   </div>
 </ion-content>

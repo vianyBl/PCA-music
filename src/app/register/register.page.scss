@@ -1,101 +1,128 @@
-ion-content {
-  --background: radial-gradient(circle at top, #1c1f46 0%, #0a0b1c 70%);
+.auth-wrapper {
+  height: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background: var(--ion-background-color);
+  padding: 20px;
 }
 
-/* ================= CARD ================= */
-.register-card {
+.blob-bg {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, var(--ion-color-primary) 0%, transparent 70%);
+  filter: blur(60px);
+  opacity: 0.15;
+  top: -80px;
+  right: -80px;
+
+  &.secondary {
+    background: radial-gradient(circle, var(--ion-color-secondary) 0%, transparent 70%);
+    bottom: -150px;
+    left: -150px;
+    top: auto;
+    right: auto;
+  }
+}
+
+.auth-container {
   width: 100%;
   max-width: 420px;
-  padding: 28px 22px 32px;
-  background: rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(14px);
-  border-radius: 22px;
-  box-shadow:
-    0 30px 60px rgba(0, 0, 0, 0.55),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  animation: fadeUp 420ms ease;
+  position: relative;
+  z-index: 10;
 }
 
-/* ================= INPUTS ================= */
-ion-item {
-  --background: rgba(255, 255, 255, 0.05);
-  --border-radius: 18px;
-  --border-color: transparent;
-  margin-bottom: 14px;
-  transition: transform 160ms ease, box-shadow 160ms ease;
-}
+.header-nav {
+  margin-bottom: 20px;
 
-ion-item:focus-within {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
-}
-
-ion-input {
-  color: #ffffff;
-  font-size: 0.95rem;
-}
-
-ion-input::placeholder {
-  color: #b9bdd6;
-}
-
-/* ================= PASSWORD ICON ================= */
-.toggle-password-icon {
-  font-size: 20px;
-  color: #9aa0b6;
-  transition: color 160ms ease, transform 160ms ease;
-}
-
-.toggle-password-icon:hover {
-  color: #ffffff;
-  transform: scale(1.1);
-}
-
-/* ================= VALIDATION ================= */
-.validation-message small {
-  display: block;
-  margin: 4px 10px 10px;
-  font-size: 0.75rem;
-  color: #ff6b6b;
-}
-
-.helper-text {
-  font-size: 0.72rem;
-  line-height: 1.4;
-  color: #aab0d6;
-  margin: 4px 10px 14px;
-}
-
-/* ================= BUTTONS ================= */
-ion-button {
-  height: 44px;
-  --border-radius: 14px;
-  font-weight: 600;
-  letter-spacing: 0.4px;
-}
-
-ion-button[type="submit"] {
-  --background: linear-gradient(135deg, #5f6cff, #8f9bff);
-  --color: #ffffff;
-  box-shadow: 0 10px 24px rgba(95, 108, 255, 0.45);
-}
-
-ion-button[fill="clear"] {
-  --color: #cdd2ff;
-  font-size: 0.85rem;
-}
-
-/* ================= ANIMATION ================= */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
+  .back-btn {
+    --color: var(--ion-color-medium);
+    font-weight: 600;
+    margin: 0;
+    --padding-start: 0;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+}
+
+.brand-section {
+  text-align: left;
+  margin-bottom: 30px;
+  padding-left: 10px;
+
+  h1 {
+    font-size: 2.2rem;
+    font-weight: 900;
+    margin: 0;
+  }
+
+  p {
+    color: var(--ion-color-medium);
+    font-size: 1.1rem;
+    margin-top: 5px;
+  }
+}
+
+.glass-card {
+  --background: transparent;
+  background: rgba(var(--ion-item-background-rgb, 255, 255, 255), 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.08);
+  border-radius: 30px;
+  padding: 25px;
+  margin: 0;
+  box-shadow: var(--card-shadow);
+}
+
+.input-group {
+  margin-bottom: 16px;
+}
+
+.custom-input {
+  --background: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.05);
+  --border-radius: 14px;
+  --padding-start: 12px;
+  --color: var(--ion-text-color);
+
+  ion-icon {
+    color: var(--ion-color-primary);
+    font-size: 1.2rem;
+  }
+
+  ion-input {
+    --padding-start: 10px;
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+
+  .eye-btn {
+    --color: var(--ion-color-medium);
+    margin: 0;
+    --padding-end: 10px;
+  }
+}
+
+.main-btn {
+  --border-radius: 14px;
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-top: 20px;
+  box-shadow: 0 8px 20px rgba(var(--ion-color-primary-rgb), 0.2);
+}
+
+.footer-prompt {
+  text-align: center;
+  margin-top: 30px;
+  color: var(--ion-color-medium);
+
+  a {
+    color: var(--ion-color-primary);
+    font-weight: 700;
+    margin-left: 8px;
+    text-decoration: none;
   }
 }

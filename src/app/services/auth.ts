@@ -7,24 +7,37 @@ import { StorageService } from '../storage.service';
 })
 export class Auth {
 
-  constructor(private storage: StorageService) {}
+  constructor(private storage: StorageService) { }
 
   // 🔐 LOGIN
   async loginUser(credentials: any): Promise<string> {
+    console.log('Auth: loginUser called with', credentials);
     return new Promise(async (accept, reject) => {
       const registeredEmail = await this.storage.get('registeredEmail');
       const registeredPassword = await this.storage.get('registeredPassword');
 
+      console.log('Auth: registeredEmail:', registeredEmail);
+      console.log('Auth: registeredPassword:', registeredPassword);
+
+      const providedEmail = credentials.email?.trim().toLowerCase();
+      const providedPassword = credentials.password?.trim();
+
+      const storedEmail = registeredEmail?.trim().toLowerCase();
+      const storedPassword = registeredPassword?.trim();
+
       if (
-        credentials.email === registeredEmail &&
-        credentials.password === registeredPassword
+        providedEmail && providedEmail === storedEmail &&
+        providedPassword && providedPassword === storedPassword
       ) {
+        console.log('Auth: Login success, setting isLoggedIn=true');
         await this.storage.set('isLoggedIn', true);
-        await this.storage.set('user', credentials.email);
+        await this.storage.set('user', providedEmail);
         accept('login correcto');
       } else {
-        await this.storage.remove('isLoggedIn');
-        await this.storage.remove('user');
+        console.log('Auth: Login failed - mismatch or missing data');
+        console.log(`Auth: Provided: ${providedEmail} / Stored: ${storedEmail}`);
+        // No borramos isLoggedIn aquí para evitar cerrar sesiones válidas por error de tipeo, 
+        // a menos que sea necesario.
         reject('login incorrecto');
       }
     });
@@ -61,5 +74,10 @@ export class Auth {
   async isLogged(): Promise<boolean> {
     const logged = await this.storage.get('isLoggedIn');
     return logged === true;
+  }
+
+  // 📧 Helper para verificar si existe usuario
+  async getRegisteredEmail(): Promise<string> {
+    return await this.storage.get('registeredEmail');
   }
 }

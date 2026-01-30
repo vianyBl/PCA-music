@@ -1,17 +1,44 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ToastController } from '@ionic/angular'; 
-import { Router } from '@angular/router';
+import {
+  IonContent,
+  IonButton,
+  IonIcon,
+  IonItem,
+  IonInput,
+  IonCard,
+  ToastController
+} from '@ionic/angular/standalone';
+import { Router, RouterLink } from '@angular/router';
 import { Auth } from '../services/auth';
-import { RouterLink } from '@angular/router';
+import { addIcons } from 'ionicons';
+import {
+  personOutline,
+  mailOutline,
+  lockClosedOutline,
+  eyeOutline,
+  eyeOffOutline,
+  calendarOutline,
+  arrowBackOutline
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule, RouterLink]
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    IonContent,
+    IonButton,
+    IonIcon,
+    IonItem,
+    IonInput,
+    IonCard
+  ]
 })
 export class RegisterPage implements OnInit {
 
@@ -21,17 +48,26 @@ export class RegisterPage implements OnInit {
   confirmPassword: string = '';
   birthdate: string = '';
 
-  // Toggle visibility
-  showPassword: boolean = false;
-  showConfirmPassword: boolean = false;
+  showPassword = false;
+  showConfirmPassword = false;
 
   constructor(
     private auth: Auth,
     private router: Router,
-    private toastController: ToastController // 👈 Lo inyectamos aquí
-  ) {}
+    private toastController: ToastController
+  ) {
+    addIcons({
+      personOutline,
+      mailOutline,
+      lockClosedOutline,
+      eyeOutline,
+      eyeOffOutline,
+      calendarOutline,
+      arrowBackOutline
+    });
+  }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   togglePasswordVisibility(field: 'password' | 'confirm' = 'password') {
     if (field === 'confirm') {
@@ -41,47 +77,31 @@ export class RegisterPage implements OnInit {
     }
   }
 
-  // 👇 Función auxiliar para mostrar mensajes bonitos
   async presentToast(message: string, color: 'success' | 'danger' | 'warning' = 'danger') {
     const toast = await this.toastController.create({
       message: message,
-      duration: 2000,
+      duration: 2500,
       position: 'bottom',
-      color: color
+      color: color,
+      cssClass: 'custom-toast'
     });
     await toast.present();
   }
 
-  // Validación rápida que también se usa para feedback inline
-  passwordMeetsRequirements(pw: string): boolean {
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s])[^\s]{6,}$/;
-    return passwordRegex.test(pw);
-  }
-
   async register() {
-    // 🔴 Validaciones con Toast
     if (!this.username || !this.email || !this.password || !this.confirmPassword || !this.birthdate) {
-      this.presentToast('Completa todos los campos', 'warning');
+      this.presentToast('Completa todos los campos para continuar', 'warning');
       return;
     }
 
-    // ✅ Validación de contraseña (mínimo 6, mayúscula, minúscula, número y al menos un carácter especial, sin espacios)
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s])[^\s]{6,}$/;
-
     if (!passwordRegex.test(this.password)) {
-      this.presentToast('La contraseña debe tener mínimo 6 caracteres, incluir mayúscula, minúscula, número y carácter especial (sin espacios)', 'warning');
+      this.presentToast('Contraseña débil: añade mayúsculas, números y símbolos.', 'warning');
       return;
     }
 
     if (this.password !== this.confirmPassword) {
       this.presentToast('Las contraseñas no coinciden', 'warning');
-      return;
-    }
-
-    // Validar si el email ya está registrado
-    const registeredEmail = await this.auth['storage'].get('registeredEmail');
-    if (registeredEmail && registeredEmail === this.email) {
-      this.presentToast('El correo ya está registrado. Inicia sesión o usa otro.', 'danger');
       return;
     }
 
@@ -91,12 +111,10 @@ export class RegisterPage implements OnInit {
         this.password,
         { username: this.username, birthdate: this.birthdate }
       );
-      // ✅ Éxito
-      this.presentToast('Registro exitoso 🎉', 'success');
+      this.presentToast('¡Cuenta creada! Ya puedes entrar 🎉', 'success');
       this.router.navigate(['/login']);
     } catch (error) {
-      console.error(error);
-      this.presentToast('Error al registrar el usuario', 'danger');
+      this.presentToast('Hubo un problema al crear tu cuenta', 'danger');
     }
   }
 }

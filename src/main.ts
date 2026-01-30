@@ -1,6 +1,5 @@
-import { setAssetPath } from 'ionicons';
-setAssetPath(`${location.origin}/svg/`);
-import { enableProdMode, importProvidersFrom } from '@angular/core'; 
+
+import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { RouteReuseStrategy, provideRouter, withPreloading, PreloadAllModules } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
