@@ -36,23 +36,48 @@
         <ion-button fill="clear" size="small">Ver todo</ion-button>
       </div>
 
-      <swiper-container [slidesPerView]="1.2" [spaceBetween]="20" [centeredSlides]="false" class="popular-slider">
+      <swiper-container
+        [slidesPerView]="1.2"
+        [spaceBetween]="20"
+        [centeredSlides]="false"
+        class="popular-slider"
+      >
         <swiper-slide *ngFor="let track of topTracks">
           <div class="track-card">
+
             <div class="card-image">
               <img [src]="track.album?.cover_medium" [alt]="track.title" />
+
+              <!-- BOTÓN FAVORITO ❤️ -->
+              <ion-button
+                fill="clear"
+                class="favorite-btn"
+                (click)="toggleFavorite(track)"
+              >
+                <ion-icon
+                  [name]="isFavorite(track.id) ? 'heart' : 'heart-outline'"
+                  color="danger"
+                ></ion-icon>
+              </ion-button>
+
               <div class="play-overlay">
                 <ion-icon name="play-circle-outline"></ion-icon>
               </div>
             </div>
+
             <div class="card-info">
               <h3>{{ track.title }}</h3>
               <p>{{ track.artist?.name }}</p>
             </div>
+
           </div>
         </swiper-slide>
+
         <div *ngIf="isLoading" class="loading-cards">
-          <ion-skeleton-text animated style="width: 280px; height: 180px; border-radius: 20px;"></ion-skeleton-text>
+          <ion-skeleton-text
+            animated
+            style="width: 280px; height: 180px; border-radius: 20px;"
+          ></ion-skeleton-text>
         </div>
       </swiper-container>
     </section>
@@ -78,7 +103,13 @@
 
     <!-- Quick Actions -->
     <section class="section quick-actions animate-up" style="animation-delay: 0.3s">
-      <ion-button (click)="irAIntro()" expand="block" fill="outline" shape="round" color="medium">
+      <ion-button
+        (click)="irAIntro()"
+        expand="block"
+        fill="outline"
+        shape="round"
+        color="medium"
+      >
         <ion-icon name="refresh-outline" slot="start"></ion-icon>
         Reiniciar Tutorial
       </ion-button>

@@ -6,6 +6,7 @@ import { StorageService } from '../storage.service';
 import { Auth } from '../services/auth';
 import { Router } from '@angular/router';
 import { ThemeService, AppTheme } from '../services/theme.service';
+import { FavoriteService } from '../services/favorite';
 import { register } from 'swiper/element/bundle';
 import { addIcons } from 'ionicons';
 import {
@@ -15,7 +16,9 @@ import {
   searchOutline,
   musicalNotesOutline,
   playCircleOutline,
-  refreshOutline
+  refreshOutline,
+  heartOutline,
+  heart
 } from 'ionicons/icons';
 
 @Component({
@@ -38,7 +41,8 @@ export class HomePage implements OnInit {
     private router: Router,
     private auth: Auth,
     private music: Music,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private favoriteService: FavoriteService
   ) {
     register();
     addIcons({
@@ -48,7 +52,9 @@ export class HomePage implements OnInit {
       searchOutline,
       musicalNotesOutline,
       playCircleOutline,
-      refreshOutline
+      refreshOutline,
+      heartOutline,
+      heart
     });
   }
 
@@ -78,6 +84,15 @@ export class HomePage implements OnInit {
     } finally {
       this.isLoading = false;
     }
+  }
+
+  /** ❤️ Favoritos */
+  toggleFavorite(track: any) {
+    this.favoriteService.toggleFavorite(track);
+  }
+
+  isFavorite(trackId: number | string): boolean {
+    return this.favoriteService.isFavorite(trackId);
   }
 
   async logout() {
